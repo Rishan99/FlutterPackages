@@ -68,7 +68,7 @@ class _RecaptchaV2State extends State<RecaptchaV2> with TickerProviderStateMixin
         onMessageReceived: (JavaScriptMessage receiver) {
           String _token = receiver.message;
           if (_token.contains("verify")) {
-            _token = _token.substring(7);
+            _token = _token.replaceAll("verify", "").trimLeft();
           }
           verifyToken(_token);
         },
