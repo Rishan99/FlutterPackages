@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_recaptcha_v2_compat/flutter_recaptcha_v2_compat.dart';
 import 'package:flutter_recaptcha_v2_compat/recaptcha_v2.dart';
 
 void main() => runApp(MyApp());
@@ -38,13 +39,12 @@ class MyHomePage extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   const SizedBox(height: 24),
-                  RecaptchaV2Button(
+                  RecaptchaV2(
+                    controller: RecaptchaV2Controller(),
                     apiKey: "6LfXp1UpAAAAAEku9BSeBt6JJxXrlvtYjh--X4D7",
                     apiSecret: "6LfXp1UpAAAAAIFVynIPkooVWZi5qN8u16SYJTVt",
-                    pluginURL:
-                        'https://recaptcha-flutter-plugin.firebaseapp.com/',
-                    isErrorShowing: false,
-                    onVerified: (val) {
+                    pluginURL: 'https://recaptcha-flutter-plugin.firebaseapp.com/',
+                    onVerifiedSuccessfully: (val) {
                       print('$TAG: Verified $val');
                     },
                   ),

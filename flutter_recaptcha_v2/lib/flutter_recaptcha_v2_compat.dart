@@ -31,28 +31,21 @@ class RecaptchaV2 extends StatefulWidget {
   State<StatefulWidget> createState() => _RecaptchaV2State();
 }
 
-class _RecaptchaV2State extends State<RecaptchaV2>
-    with TickerProviderStateMixin {
+class _RecaptchaV2State extends State<RecaptchaV2> with TickerProviderStateMixin {
   late RecaptchaV2Controller controller;
   late WebViewController webViewController;
 
   void verifyToken(String token) async {
     String url = "https://www.google.com/recaptcha/api/siteverify";
-    http.Response response = await http.post(Uri.parse(url), body: {
-      "secret": widget.apiSecret,
-      "response": token,
-    });
-
-    // print("Response status: ${response.statusCode}");
-    // print("Response body: ${response.body}");
-
+    url += "?secret=${widget.apiSecret}&response=$token";
+    http.Response response = await http.get(Uri.parse(url));
     if (response.statusCode == 200) {
       dynamic json = jsonDecode(response.body);
       if (json['success']) {
         widget.onVerifiedSuccessfully?.call(true);
       } else {
         widget.onVerifiedSuccessfully?.call(false);
-        widget.onVerifiedError?.call(json['error-codes'].toString());
+        // widget.onVerifiedError?.call(json['error-codes'].toString());
       }
     }
   }
@@ -102,8 +95,7 @@ class _RecaptchaV2State extends State<RecaptchaV2>
   Widget build(BuildContext context) {
     return Container(
       padding: widget.padding,
-      constraints:
-          BoxConstraints(maxHeight: MediaQuery.of(context).size.height * 0.65),
+      constraints: BoxConstraints(maxHeight: MediaQuery.of(context).size.height * 0.65),
       child: WebViewWidget(controller: webViewController),
     );
   }
