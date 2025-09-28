@@ -328,8 +328,8 @@ class SmartRefresherState extends State<SmartRefresher> {
                 (!isBouncingPhysics
                     ? SpringDescription(
                         mass: 1.0,
-                        stiffness: 100.499375,
-                        damping: 20,
+                        stiffness: 1.0,
+                        damping: 1,
                       )
                     : const SpringDescription(
                         mass: 2.2,
